@@ -21,6 +21,7 @@ class SearchLocationViewController: UIViewController {
             setRegion()
         }
     }
+    var mapItems: [MKMapItem]?
     
     //MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -78,6 +79,40 @@ class SearchLocationViewController: UIViewController {
         searchCompleter.queryFragment = searchBar.text ?? ""
         print("query fragments: \(searchCompleter.queryFragment)")
     }
+    
+    func getAddressFrom(searchResultsTitle: String){
+            let request = MKLocalSearch.Request()
+            request.naturalLanguageQuery = searchResultsTitle
+            let localSearch = MKLocalSearch(request: request)
+            
+            localSearch.start { (response, error) in
+                if let error = error {
+                    print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
+                    return
+                }
+                if response == nil {
+                    print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+                    return
+                }
+                
+                //get the lat and long associated with the string/word/name we just go back from this call
+                guard let lat = response?.boundingRegion.center.latitude, let long = response?.boundingRegion.center.longitude else {
+                    print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+                    return
+                }
+                
+                //create annotation to add to map
+                let annotation = MKPointAnnotation()
+                annotation.title = searchResultsTitle
+                annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                
+                //add it to mapview
+                self.mapView.addAnnotation(annotation)
+            }
+    }
+   
+   
+    
 }
 
 //MARK: - UISearchBarDelegate Methods
@@ -114,6 +149,8 @@ extension SearchLocationViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
         let searchResult = searchResults[indexPath.row]
+        //now that we have a string we can get address from it
+        getAddressFrom(searchResultsTitle: searchResult.title)
         cell.textLabel?.text = searchResult.title
         
         return cell
