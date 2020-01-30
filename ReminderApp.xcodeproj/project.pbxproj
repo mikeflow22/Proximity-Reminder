@@ -15,6 +15,7 @@
 		1BF90C4623E33EFC00FE76BA /* ReminderListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C4523E33EFC00FE76BA /* ReminderListTableViewController.swift */; };
 		1BF90C4823E33F1200FE76BA /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C4723E33F1200FE76BA /* SearchLocationViewController.swift */; };
 		1BF90C4A23E33F2300FE76BA /* DetailReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C4923E33F2300FE76BA /* DetailReminderViewController.swift */; };
+		1BF90C5323E342C200FE76BA /* Reminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C5123E342C200FE76BA /* Reminder.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		1BF90C4523E33EFC00FE76BA /* ReminderListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListTableViewController.swift; sourceTree = "<group>"; };
 		1BF90C4723E33F1200FE76BA /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
 		1BF90C4923E33F2300FE76BA /* DetailReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReminderViewController.swift; sourceTree = "<group>"; };
+		1BF90C5223E342C200FE76BA /* Reminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reminder.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 		1BF90C4E23E33F6400FE76BA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1BF90C5123E342C200FE76BA /* Reminder.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				1BF90C4823E33F1200FE76BA /* SearchLocationViewController.swift in Sources */,
 				1BF90C3223E332CF00FE76BA /* AppDelegate.swift in Sources */,
 				1BF90C3423E332CF00FE76BA /* SceneDelegate.swift in Sources */,
+				1BF90C5323E342C200FE76BA /* Reminder.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +398,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1BF90C5123E342C200FE76BA /* Reminder.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1BF90C5223E342C200FE76BA /* Reminder.xcdatamodel */,
+			);
+			currentVersion = 1BF90C5223E342C200FE76BA /* Reminder.xcdatamodel */;
+			path = Reminder.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1BF90C2623E332CF00FE76BA /* Project object */;
 }
