@@ -16,6 +16,7 @@
 		1BF90C4823E33F1200FE76BA /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C4723E33F1200FE76BA /* SearchLocationViewController.swift */; };
 		1BF90C4A23E33F2300FE76BA /* DetailReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C4923E33F2300FE76BA /* DetailReminderViewController.swift */; };
 		1BF90C5323E342C200FE76BA /* Reminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C5123E342C200FE76BA /* Reminder.xcdatamodeld */; };
+		1BF90C5523E3435000FE76BA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C5423E3435000FE76BA /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		1BF90C4723E33F1200FE76BA /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
 		1BF90C4923E33F2300FE76BA /* DetailReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReminderViewController.swift; sourceTree = "<group>"; };
 		1BF90C5223E342C200FE76BA /* Reminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reminder.xcdatamodel; sourceTree = "<group>"; };
+		1BF90C5423E3435000FE76BA /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				1BF90C5123E342C200FE76BA /* Reminder.xcdatamodeld */,
+				1BF90C5423E3435000FE76BA /* CoreDataStack.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BF90C5523E3435000FE76BA /* CoreDataStack.swift in Sources */,
 				1BF90C4A23E33F2300FE76BA /* DetailReminderViewController.swift in Sources */,
 				1BF90C4623E33EFC00FE76BA /* ReminderListTableViewController.swift in Sources */,
 				1BF90C4823E33F1200FE76BA /* SearchLocationViewController.swift in Sources */,
