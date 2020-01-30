@@ -11,8 +11,12 @@ import MapKit
 import CoreLocation
 
 class SearchLocationViewController: UIViewController {
-
+    
     //MARK: - Instance Properties
+    let locationManager = CLLocationManager()
+    let searchCompleter = MKLocalSearchCompleter()
+    var searchResults = [MKLocalSearchCompletion]()
+    var currentLocation: CLLocation?
     
     //MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -25,19 +29,34 @@ class SearchLocationViewController: UIViewController {
         mapView.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
+        searchCompleter.delegate = self
+        self.searchCompleter.region = self.mapView.region
+        requestLocationPermission()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func requestLocationPermission(){
+        if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse  {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestLocation()
+            locationManager.startUpdatingLocation()
+        } else {
+            locationManager.requestAlwaysAuthorization()
+        }
     }
-    */
-
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchCompleter.queryFragment = searchBar.text ?? ""
+    }
 }
 
 //MARK: - UISearchBarDelegate Methods
@@ -50,19 +69,60 @@ extension SearchLocationViewController: MKMapViewDelegate {
     
 }
 
+//MARK: - MKLocalSearchCompleterDelegate Methods
+extension SearchLocationViewController: MKLocalSearchCompleterDelegate {
+    //As the user types, new completion suggestions are continuously returned to this method - overwrite the existing results, and then referesh the UI with the new results
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        self.searchResults = completer.results
+        tableView.reloadData()
+    }
+}
+
 //MARK: - UITableView Data Source and Delegate Methods
 extension SearchLocationViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     return 0
+        return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
+        let searchResult = searchResults[indexPath.row]
+        cell.textLabel?.text = searchResult.title
         
-        return UITableViewCell()
+        return cell
     }
 }
 
 //MARK: - CLLocationManagerDelegate Methods
 extension SearchLocationViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.requestLocation() //this triggers a delegate callback
+        case .restricted:
+            print("restricted")
+            locationManager.stopUpdatingLocation()
+        case .notDetermined:
+            print("not determined")
+            locationManager.stopUpdatingLocation()
+        case .denied:
+            locationManager.stopUpdatingLocation()
+        @unknown default:
+            fatalError()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else {
+            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+            return
+        }
+        self.currentLocation = location
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
+         
+    }
     
 }
