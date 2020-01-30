@@ -82,16 +82,16 @@
                                 </prototypes>
                             </tableView>
                             <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fqI-ql-u3T">
-                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <rect key="frame" x="5" y="88" width="404" height="56"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="414" id="xeE-oc-AM0"/>
+                                    <constraint firstAttribute="width" constant="404" id="3Ux-LY-fF2"/>
                                 </constraints>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="fqI-ql-u3T" firstAttribute="centerX" secondItem="XuS-hO-2h6" secondAttribute="centerX" id="1cY-bF-SVt"/>
+                            <constraint firstItem="fqI-ql-u3T" firstAttribute="centerX" secondItem="XuS-hO-2h6" secondAttribute="centerX" id="5qT-SQ-tbn"/>
                             <constraint firstItem="fqI-ql-u3T" firstAttribute="top" secondItem="D0E-XH-Em9" secondAttribute="top" id="Rg3-xP-ydi"/>
                             <constraint firstItem="iON-hL-Nnf" firstAttribute="top" secondItem="fqI-ql-u3T" secondAttribute="bottom" id="TkO-qV-aqX"/>
                             <constraint firstItem="1lu-iy-Wi0" firstAttribute="top" secondItem="D0E-XH-Em9" secondAttribute="top" constant="356" id="Ys3-FP-GWV"/>

@@ -62,8 +62,8 @@ class SearchLocationViewController: UIViewController {
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate2d, span: span)
         mapView.setRegion(region, animated: true)
-//        mapView.setCenter(coordinate2d, animated: true)
     }
+    
     /*
      // MARK: - Navigation
      
@@ -73,8 +73,10 @@ class SearchLocationViewController: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchCompleter.queryFragment = searchBar.text ?? ""
+        print("query fragments: \(searchCompleter.queryFragment)")
     }
 }
 
@@ -93,7 +95,13 @@ extension SearchLocationViewController: MKLocalSearchCompleterDelegate {
     //As the user types, new completion suggestions are continuously returned to this method - overwrite the existing results, and then referesh the UI with the new results
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         self.searchResults = completer.results
+        print("these are the search results count: \(self.searchResults.count)")
         tableView.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+            print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
+         
     }
 }
 
