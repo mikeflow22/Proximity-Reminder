@@ -7,13 +7,24 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 class SearchLocationViewController: UIViewController {
 
+    //MARK: - Instance Properties
+    
+    //MARK: - IBOutlets
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
+        mapView.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
 
@@ -27,4 +38,31 @@ class SearchLocationViewController: UIViewController {
     }
     */
 
+}
+
+//MARK: - UISearchBarDelegate Methods
+extension SearchLocationViewController: UISearchBarDelegate {
+    
+}
+
+//MARK: - MKMapViewDelegate Methods
+extension SearchLocationViewController: MKMapViewDelegate {
+    
+}
+
+//MARK: - UITableView Data Source and Delegate Methods
+extension SearchLocationViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        return UITableViewCell()
+    }
+}
+
+//MARK: - CLLocationManagerDelegate Methods
+extension SearchLocationViewController: CLLocationManagerDelegate {
+    
 }

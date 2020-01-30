@@ -54,7 +54,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iON-hL-Nnf">
-                                <rect key="frame" x="0.0" y="88" width="414" height="357"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="357"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="357" id="18z-LD-0Bm"/>
                                     <constraint firstAttribute="width" constant="414" id="cAu-w5-17d"/>
@@ -81,10 +81,19 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="fqI-ql-u3T">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="414" id="xeE-oc-AM0"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="iON-hL-Nnf" firstAttribute="top" secondItem="D0E-XH-Em9" secondAttribute="top" id="TkO-qV-aqX"/>
+                            <constraint firstItem="fqI-ql-u3T" firstAttribute="centerX" secondItem="XuS-hO-2h6" secondAttribute="centerX" id="1cY-bF-SVt"/>
+                            <constraint firstItem="fqI-ql-u3T" firstAttribute="top" secondItem="D0E-XH-Em9" secondAttribute="top" id="Rg3-xP-ydi"/>
+                            <constraint firstItem="iON-hL-Nnf" firstAttribute="top" secondItem="fqI-ql-u3T" secondAttribute="bottom" id="TkO-qV-aqX"/>
                             <constraint firstItem="1lu-iy-Wi0" firstAttribute="top" secondItem="D0E-XH-Em9" secondAttribute="top" constant="356" id="Ys3-FP-GWV"/>
                             <constraint firstItem="iON-hL-Nnf" firstAttribute="centerX" secondItem="XuS-hO-2h6" secondAttribute="centerX" id="bf0-wb-feS"/>
                             <constraint firstItem="1lu-iy-Wi0" firstAttribute="centerX" secondItem="XuS-hO-2h6" secondAttribute="centerX" id="r0e-lf-vyV"/>
@@ -92,6 +101,11 @@
                         <viewLayoutGuide key="safeArea" id="D0E-XH-Em9"/>
                     </view>
                     <navigationItem key="navigationItem" id="0Tb-JB-m4d"/>
+                    <connections>
+                        <outlet property="mapView" destination="iON-hL-Nnf" id="6Q2-Hc-THN"/>
+                        <outlet property="searchBar" destination="fqI-ql-u3T" id="HAg-tW-mwK"/>
+                        <outlet property="tableView" destination="1lu-iy-Wi0" id="OCf-eB-TKE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bnB-wx-tu1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
