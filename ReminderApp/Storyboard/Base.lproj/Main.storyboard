@@ -10,13 +10,13 @@
         <!--Reminders-->
         <scene sceneID="ejS-kS-bWI">
             <objects>
-                <tableViewController id="bgV-ec-L4D" sceneMemberID="viewController">
+                <tableViewController id="bgV-ec-L4D" customClass="ReminderListTableViewController" customModule="ReminderApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cM9-eY-TJo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="exy-NP-nQN">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="reminderCell" id="exy-NP-nQN">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="exy-NP-nQN" id="S8n-aj-dkt">
@@ -24,7 +24,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="B1v-qP-bzz" kind="show" id="HZh-gB-9PJ"/>
+                                    <segue destination="B1v-qP-bzz" kind="show" identifier="cellSegue" id="HZh-gB-9PJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -36,7 +36,7 @@
                     <navigationItem key="navigationItem" title="Reminders" id="SXX-dc-xWV">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xRB-9s-fEu">
                             <connections>
-                                <segue destination="P4y-nx-IUt" kind="show" id="acd-8W-yjM"/>
+                                <segue destination="P4y-nx-IUt" kind="show" identifier="addSegue" id="acd-8W-yjM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -45,10 +45,10 @@
             </objects>
             <point key="canvasLocation" x="614" y="144"/>
         </scene>
-        <!--View Controller-->
+        <!--Search Location View Controller-->
         <scene sceneID="exU-uh-4JI">
             <objects>
-                <viewController id="P4y-nx-IUt" sceneMemberID="viewController">
+                <viewController id="P4y-nx-IUt" customClass="SearchLocationViewController" customModule="ReminderApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XuS-hO-2h6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -68,7 +68,7 @@
                                     <constraint firstAttribute="height" constant="452" id="kZ3-Mp-a48"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="jWx-5Q-EV9">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="searchCell" id="jWx-5Q-EV9">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jWx-5Q-EV9" id="DMq-2k-Ven">
@@ -76,7 +76,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="B1v-qP-bzz" kind="show" id="g3i-H8-lFW"/>
+                                            <segue destination="B1v-qP-bzz" kind="show" identifier="detailSegue" id="g3i-H8-lFW"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -97,10 +97,10 @@
             </objects>
             <point key="canvasLocation" x="1291.304347826087" y="143.97321428571428"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail Reminder View Controller-->
         <scene sceneID="D01-eu-KWZ">
             <objects>
-                <viewController id="B1v-qP-bzz" sceneMemberID="viewController">
+                <viewController id="B1v-qP-bzz" customClass="DetailReminderViewController" customModule="ReminderApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pWq-jA-5bJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
