@@ -16,7 +16,11 @@ class SearchLocationViewController: UIViewController {
     let locationManager = CLLocationManager()
     let searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
-    var currentLocation: CLLocation?
+    var currentLocation: CLLocation? {
+        didSet {
+            setRegion()
+        }
+    }
     
     //MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -45,6 +49,21 @@ class SearchLocationViewController: UIViewController {
         }
     }
     
+    func setRegion(){
+        guard let userLocation = currentLocation else {
+            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+            return
+        }
+        mapView.showsUserLocation = true
+        let lat = userLocation.coordinate.latitude
+        let long = userLocation.coordinate.longitude
+        
+        let coordinate2d = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let region = MKCoordinateRegion(center: coordinate2d, span: span)
+        mapView.setRegion(region, animated: true)
+//        mapView.setCenter(coordinate2d, animated: true)
+    }
     /*
      // MARK: - Navigation
      
@@ -117,7 +136,9 @@ extension SearchLocationViewController: CLLocationManagerDelegate {
             print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
             return
         }
+        
         self.currentLocation = location
+        print("current location: \(self.currentLocation)")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
