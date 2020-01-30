@@ -18,6 +18,7 @@
 		1BF90C5323E342C200FE76BA /* Reminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C5123E342C200FE76BA /* Reminder.xcdatamodeld */; };
 		1BF90C5523E3435000FE76BA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C5423E3435000FE76BA /* CoreDataStack.swift */; };
 		1BF90C5723E3438000FE76BA /* Reminder+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C5623E3438000FE76BA /* Reminder+Convenience.swift */; };
+		1BF90C5923E344FE00FE76BA /* ReminderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C5823E344FE00FE76BA /* ReminderController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		1BF90C5223E342C200FE76BA /* Reminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Reminder.xcdatamodel; sourceTree = "<group>"; };
 		1BF90C5423E3435000FE76BA /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		1BF90C5623E3438000FE76BA /* Reminder+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+Convenience.swift"; sourceTree = "<group>"; };
+		1BF90C5823E344FE00FE76BA /* ReminderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,12 +68,12 @@
 		1BF90C3023E332CF00FE76BA /* ReminderApp */ = {
 			isa = PBXGroup;
 			children = (
+				1BF90C4C23E33F4800FE76BA /* Storyboard */,
+				1BF90C4D23E33F5500FE76BA /* View Controllers */,
 				1BF90C5023E33F7800FE76BA /* Views */,
 				1BF90C4F23E33F6B00FE76BA /* Model Controllers */,
 				1BF90C4E23E33F6400FE76BA /* Model */,
 				1BF90C4B23E33F3900FE76BA /* Resources */,
-				1BF90C4C23E33F4800FE76BA /* Storyboard */,
-				1BF90C4D23E33F5500FE76BA /* View Controllers */,
 			);
 			path = ReminderApp;
 			sourceTree = "<group>";
@@ -119,6 +121,7 @@
 		1BF90C4F23E33F6B00FE76BA /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1BF90C5823E344FE00FE76BA /* ReminderController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				1BF90C4623E33EFC00FE76BA /* ReminderListTableViewController.swift in Sources */,
 				1BF90C5723E3438000FE76BA /* Reminder+Convenience.swift in Sources */,
 				1BF90C4823E33F1200FE76BA /* SearchLocationViewController.swift in Sources */,
+				1BF90C5923E344FE00FE76BA /* ReminderController.swift in Sources */,
 				1BF90C3223E332CF00FE76BA /* AppDelegate.swift in Sources */,
 				1BF90C3423E332CF00FE76BA /* SceneDelegate.swift in Sources */,
 				1BF90C5323E342C200FE76BA /* Reminder.xcdatamodeld in Sources */,
