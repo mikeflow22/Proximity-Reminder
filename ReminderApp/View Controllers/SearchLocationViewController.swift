@@ -22,6 +22,7 @@ class SearchLocationViewController: UIViewController {
         }
     }
     var mapItems: [MKMapItem]?
+    var annotations: [MKAnnotation]?
     
     //MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -65,19 +66,40 @@ class SearchLocationViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
     
-    /*
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+        if segue.identifier == "detailSegue"{
+            guard let destinationVC = segue.destination as? DetailReminderViewController, let indexPath = tableView.indexPathForSelectedRow else {
+                print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+                return
+            }
+            
+            let addressString = searchResults[indexPath.row].title
+            print("This should be passing to the next controller: \(addressString)")
+            destinationVC.addressString = addressString
+        }
      }
-     */
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchCompleter.queryFragment = searchBar.text ?? ""
-        print("query fragments: \(searchCompleter.queryFragment)")
+//        print("query fragments: \(searchCompleter.queryFragment)")
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchResults.removeAll()
+        self.tableView.reloadData()
+        print("annotations count 1 : \(self.annotations?.count)")
+        if annotations == nil {
+            self.annotations?.removeAll()
+            self.mapView.removeAnnotations(annotations ?? [])
+          
+            print("annotations count 1 : \(self.annotations?.count)")
+        } else {
+            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+        }
     }
     
     func getAddressFrom(searchResultsTitle: String){
@@ -85,7 +107,7 @@ class SearchLocationViewController: UIViewController {
             request.naturalLanguageQuery = searchResultsTitle
             let localSearch = MKLocalSearch(request: request)
             
-            localSearch.start { (response, error) in
+            localSearch.start { [unowned self] (response, error) in
                 if let error = error {
                     print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
                     return
@@ -105,14 +127,12 @@ class SearchLocationViewController: UIViewController {
                 let annotation = MKPointAnnotation()
                 annotation.title = searchResultsTitle
                 annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                
+                self.annotations?.append(annotation)
                 //add it to mapview
                 self.mapView.addAnnotation(annotation)
             }
     }
    
-   
-    
 }
 
 //MARK: - UISearchBarDelegate Methods
@@ -130,7 +150,7 @@ extension SearchLocationViewController: MKLocalSearchCompleterDelegate {
     //As the user types, new completion suggestions are continuously returned to this method - overwrite the existing results, and then referesh the UI with the new results
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         self.searchResults = completer.results
-        print("these are the search results count: \(self.searchResults.count)")
+//        print("these are the search results count: \(self.searchResults.count)")
         tableView.reloadData()
     }
     
@@ -183,7 +203,7 @@ extension SearchLocationViewController: CLLocationManagerDelegate {
         }
         
         self.currentLocation = location
-        print("current location: \(self.currentLocation)")
+        print("current location: \(String(describing: self.currentLocation))")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

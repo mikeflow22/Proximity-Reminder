@@ -9,7 +9,14 @@
 import UIKit
 
 class DetailReminderViewController: UIViewController {
-
+    
+    var addressString: String? {
+        didSet {
+            print("addressString was hit")
+            print("this is what was passed in: \(String(describing: addressString))")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
