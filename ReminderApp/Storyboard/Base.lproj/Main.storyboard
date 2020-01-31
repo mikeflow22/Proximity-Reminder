@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DD6-13-mpz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1v-qP-bzz">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
@@ -120,9 +120,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="829-Nq-kA7">
-                                <rect key="frame" x="0.0" y="88" width="414" height="433"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="433" id="HjG-gz-w9P"/>
+                                    <constraint firstAttribute="height" constant="300" id="HjG-gz-w9P"/>
                                     <constraint firstAttribute="width" constant="414" id="bgn-4t-mE7"/>
                                 </constraints>
                             </mapView>
@@ -136,9 +136,12 @@
                                 <state key="normal" title="Set Reminder">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="setReminderButtonTapped:" destination="B1v-qP-bzz" eventType="touchUpInside" id="pr5-Rd-UgK"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OOY-qM-0nd">
-                                <rect key="frame" x="16" y="529" width="382" height="62.5"/>
+                                <rect key="frame" x="16" y="396" width="382" height="62.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write Reminder:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCd-Pp-PRY">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
@@ -154,13 +157,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send reminder when I:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hyh-DH-YBJ">
-                                <rect key="frame" x="16" y="600" width="171.5" height="20.5"/>
+                                <rect key="frame" x="16" y="467" width="171.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="6Jf-Kr-Orc" userLabel="Geofence Stack View">
-                                <rect key="frame" x="16" y="624.5" width="382" height="51"/>
+                                <rect key="frame" x="16" y="491.5" width="382" height="51"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lVC-FZ-jXD" userLabel="Enter G. Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="22"/>
@@ -174,6 +177,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVz-Xr-arO">
                                                 <rect key="frame" x="137" y="0.0" width="245" height="22"/>
                                                 <state key="normal" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="EnterGeofenceButtonTapped:" destination="B1v-qP-bzz" eventType="touchUpInside" id="dr2-af-rB7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -189,6 +195,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mRA-Jl-hDc">
                                                 <rect key="frame" x="137" y="0.0" width="245" height="22"/>
                                                 <state key="normal" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="exitGeofenceButtonTapped:" destination="B1v-qP-bzz" eventType="touchUpInside" id="qyc-Ub-Lgk"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -238,6 +247,14 @@
                         <viewLayoutGuide key="safeArea" id="QAi-ay-7LY"/>
                     </view>
                     <navigationItem key="navigationItem" id="uXt-fZ-JYB"/>
+                    <connections>
+                        <outlet property="enterGeofenceProperties" destination="iVz-Xr-arO" id="LEN-dk-1M5"/>
+                        <outlet property="exitGeofenceProperties" destination="mRA-Jl-hDc" id="URS-wB-Imn"/>
+                        <outlet property="mapView" destination="829-Nq-kA7" id="vrE-Mw-z2S"/>
+                        <outlet property="radiusTextField" destination="ORd-hu-xck" id="faA-vE-Anb"/>
+                        <outlet property="reminderTextField" destination="0iN-rw-7zZ" id="soa-PJ-Hpe"/>
+                        <outlet property="setReminderProperties" destination="Q1A-sd-Q6R" id="Vfk-Nr-DlR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9VR-aI-wCs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
