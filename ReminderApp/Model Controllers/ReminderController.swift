@@ -28,9 +28,10 @@ class ReminderController  {
     }
     
     //MARK: - CRUD FUNCTIONS
-    func createReminder(withNote note: String, wantsAlertOnEntrance: Bool, wantsAlertOnExit: Bool, longitude: Double, latitude: Double, radius: Double){
-        Reminder(note: note, wantsAlertOnEntrance: wantsAlertOnEntrance, wantsAlertOnExit: wantsAlertOnExit, longitude: longitude, latitude: latitude, radius: radius)
+    func createReminder(withNote note: String, wantsAlertOnEntrance: Bool, wantsAlertOnExit: Bool, longitude: Double, latitude: Double, radius: Double) -> Reminder {
+        let reminder = Reminder(note: note, wantsAlertOnEntrance: wantsAlertOnEntrance, wantsAlertOnExit: wantsAlertOnExit, longitude: longitude, latitude: latitude, radius: radius)
         saveToPersistentStore()
+        return reminder
     }
     
     func update(reminder: Reminder, with newNote: String, newRadius: Double, newExit: Bool, newEntrance: Bool){

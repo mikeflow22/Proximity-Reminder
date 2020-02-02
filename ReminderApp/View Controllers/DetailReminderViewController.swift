@@ -13,7 +13,10 @@ import UserNotifications
 class DetailReminderViewController: UIViewController {
     
     //MARK: - INSTANCE PROPERTIES
-     var locationManager = CLLocationManager()
+    var entryButtonWasSelected: Bool = true
+    var shouldShowExitButton: Bool = true
+    let reminderController = ReminderController.shared
+    var mylocationManager = CLLocationManager()
     var addressString: String? {
         didSet {
             print("addressString was hit")
@@ -37,43 +40,128 @@ class DetailReminderViewController: UIViewController {
     @IBOutlet weak var radiusTextField: UITextField!
     @IBOutlet weak var setReminderProperties: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-//        locationManager.startUpdatingLocation()
-//        fakeData()
+        mylocationManager.delegate = self
+        mylocationManager.requestAlwaysAuthorization()
     }
     
+    //Start simulator on detailReminderViewController and just hit the set reminder button at the button. This is like mock data to see if the local notification works
     func fakeData(){
         let coordinate = CLLocationCoordinate2D(latitude: 36.01306251346607, longitude: -115.15559207182376)
-        createLocalNotification(address: "FAKE DATA", body: "FAKE DATA", coordinate: coordinate, enterRegion: true, exitRegion: true, radius: 100)
-        
+        createFakeNotification(address: "FAKE DATA", body: "FAKE DATA", coordinate: coordinate, enterRegion: true, exitRegion: true, radius: 100)
     }
+    
+    //because  this notification is "fake" or "mock" I made it so that it doesn't take in a Reminder but it still takes in all of its properties.
+    //i call this in the "fakeData()"
+    
+    func createFakeNotification(address: String, body: String,  coordinate:  CLLocationCoordinate2D, enterRegion: Bool, exitRegion: Bool, radius: Double){
+        let notificationContent = UNMutableNotificationContent()
+               //dress up notification
+               notificationContent.title = "Reminder for location: \(address)"
+               notificationContent.body = body
+               notificationContent.sound = .default
+               
+               //CREATE the circular region to monitor and set if it should be triggered on entry  or exit or both
+               let coordinate = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
+               let circularRegion = CLCircularRegion(center: coordinate, radius: radius, identifier: address)
+               circularRegion.notifyOnEntry = enterRegion
+               circularRegion.notifyOnExit = exitRegion
+               
+               //tell the location manager to start monitoring the region we've established
+              mylocationManager.startMonitoring(for: circularRegion)
+               print("Region locationManager will monitor: \(circularRegion.description)")
+               
+               //create the trigger
+               let locationTrigger = UNLocationNotificationTrigger(region: circularRegion, repeats: false)
+               
+               //every local notification trigger needs a request
+               let request = UNNotificationRequest(identifier: "Local trigger for: \(address)", content: notificationContent, trigger: locationTrigger)
+               
+               //add the request to the UNNotificationCenter singleton
+               UNUserNotificationCenter.current().add(request) { (error) in
+                   if let error = error {
+                       print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
+                       return
+                   } else {
+                       print("WE SUCCEEDED SENDING THE LOCAITON TRIGGER")
+                   }
+               }
+           }
+    
+    //This is actually the real notification function that takes in a Reminder object and then uses its properties to configure the notification and then adds the notification to the UNUserNotificationCenter
+      func createLocalNotification(forReminder reminder: Reminder, withAddress address: String){
+        //CREATE the circular region to monitor and set if it should be triggered on entry  or exit or both
+        let coordinate = CLLocationCoordinate2D(latitude: reminder.latitude, longitude: reminder.longitude)
+        let circularRegion = CLCircularRegion(center: coordinate, radius: reminder.radius, identifier: address)
+        circularRegion.notifyOnEntry = reminder.wantsAlertOnEntrance
+        circularRegion.notifyOnExit = reminder.wantsAlertOnExit
+        
+        //tell the location manager to start monitoring the region we've established
+        mylocationManager.startMonitoring(for: circularRegion)
+        print("Region locationManager will monitor: \(circularRegion.description)")
+        
+            let notificationContent = UNMutableNotificationContent()
+            //dress up notification
+            notificationContent.title = "Reminder for location: \(address)"
+            notificationContent.body = reminder.note ?? "n/a"
+            notificationContent.sound = .default
+            
+            //create the trigger
+            let locationTrigger = UNLocationNotificationTrigger(region: circularRegion, repeats: false)
+            
+            //every local notification trigger needs a request
+            let request = UNNotificationRequest(identifier: "Local trigger for: \(address)", content: notificationContent, trigger: locationTrigger)
+            
+            //add the request to the UNNotificationCenter singleton
+            UNUserNotificationCenter.current().add(request) { (error) in
+                if let error = error {
+                    print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
+                    return
+                } else {
+                    print("WE SUCCEEDED SENDING THE LOCAITON TRIGGER")
+                }
+            }
+        }
     
     //MARK: - IBActions
     @IBAction func EnterGeofenceButtonTapped(_ sender: UIButton) {
+        //a quick indication that the button was selected
+        enterGeofenceProperties.backgroundColor = .red
     }
     
     @IBAction func exitGeofenceButtonTapped(_ sender: UIButton) {
+        //a quick indication that the button was selected
+        exitGeofenceProperties.backgroundColor = .blue
+
     }
     
     @IBAction func setReminderButtonTapped(_ sender: UIButton) {
-      
-//        guard let note = reminderTextField.text, !note.isEmpty, let radiusString = radiusTextField.text, !radiusString.isEmpty, let radiusDouble = Double(radiusString)  , let address = addressString, let coordinate = coordinate else {
-//            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-//            return
-//        }
-//        if enterGeofenceProperties.isSelected == false && exitGeofenceProperties.isSelected == false {
-//            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-//            return
-//        }
+        //calling the fake data function so that I don't have to manually type anything in on the other view controllers
+//        fakeData()
         
-        fakeData()
+        //printing values here to make sure that they arent empty before I unwrap them. Without doing this I wont know what exactly failed the guard statement below.
+        print("NOte: \(reminderTextField.text)\n radius: \(radiusTextField.text)\n address: \(addressString)\n coordinates- lat: \(coordinate?.latitude)\n coordinate-long : \(coordinate?.longitude)")
         
-//        createLocalNotification(address: address, body: note, coordinate: coordinate, enterRegion: enterGeofenceProperties.isSelected, exitRegion: exitGeofenceProperties.isSelected, radius: radiusDouble)
+        guard let note = reminderTextField.text, !note.isEmpty, let radiusString = radiusTextField.text, !radiusString.isEmpty, let radiusDouble = Double(radiusString), let address = addressString, let coordinate = coordinate else {
+            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+            return
+        }
+        
+        //just  making sure at least one of the buttons to monitor entrance or exit is selected
+        if enterGeofenceProperties.isSelected == true || exitGeofenceProperties.isSelected == true {
+            print("both buttons were selected")
+        }
+
+        //now that we are sure to have values in each of the views we can then construct an Reminder object
+       let reminder = reminderController.createReminder(withNote: note, wantsAlertOnEntrance: enterGeofenceProperties.isSelected, wantsAlertOnExit: exitGeofenceProperties.isSelected, longitude: coordinate.longitude, latitude: coordinate.latitude, radius: radiusDouble)
+
+        //now that we have a reminder object we can use that to create a local notification with a location trigger
+        createLocalNotification(forReminder: reminder, withAddress: address)
+
+        //visual indication that we made it this far
+        self.view.backgroundColor = .blue
     }
     
     
@@ -119,57 +207,8 @@ class DetailReminderViewController: UIViewController {
         self.mapView.setRegion(region, animated: true)
     }
     
-//    func requestAuthorizationForNotifications(){
-//
-//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
-//            if let error = error {
-//                print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
-//                return
-//            }
-//            if success {
-//                UIApplication.shared.delegate = self
-//                print("Success: \(success.description) in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-//
-//            } else {
-//                print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-//                return
-//            }
-//        }
-//    }
-    
-    func createLocalNotification(address: String, body: String, coordinate: CLLocationCoordinate2D, enterRegion: Bool, exitRegion: Bool, radius: Double){
-        let notificationContent = UNMutableNotificationContent()
-        //dress up notification
-        notificationContent.title = "Reminder for location: \(address)"
-        notificationContent.body = body
-        notificationContent.sound = .default
-        
-        //CREATE the circular region to monitor and set if it should be triggered on entry  or exit or both
-        let circularRegion = CLCircularRegion(center: coordinate, radius: radius, identifier: address)
-        circularRegion.notifyOnEntry = enterRegion
-        circularRegion.notifyOnExit = exitRegion
-        
-        //tell the location manager to start monitoring the region we've established
-        locationManager.startMonitoring(for: circularRegion)
-        print("Region locationManager will monitor: \(circularRegion.description)")
-        
-        //create the trigger
-        let locationTrigger = UNLocationNotificationTrigger(region: circularRegion, repeats: false)
-        
-        //every local notification trigger needs a request
-        let request = UNNotificationRequest(identifier: "Local trigger for: \(address)", content: notificationContent, trigger: locationTrigger)
-        
-        //add the request to the UNNotificationCenter singleton
-        UNUserNotificationCenter.current().add(request) { (error) in
-            if let error = error {
-                print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
-                return
-            } else {
-                print("WE SUCCEEDED SENDING THE LOCAITON TRIGGER")
-            }
-        }
-    }
 }
+  
 
 extension DetailReminderViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
