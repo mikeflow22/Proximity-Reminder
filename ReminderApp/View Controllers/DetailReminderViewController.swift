@@ -29,7 +29,6 @@ class DetailReminderViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
         
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(resign)))
     }
@@ -38,8 +37,6 @@ class DetailReminderViewController: UIViewController {
         reminderTextField.resignFirstResponder()
         radiusTextField.resignFirstResponder()
     }
-    
- 
     
     //MARK: - IBActions
     @IBAction func EnterGeofenceButtonTapped(_ sender: UIButton) {
@@ -69,8 +66,7 @@ class DetailReminderViewController: UIViewController {
             }
         }
     }
-    
-    
+
     //MARK: - Instance Methods
     
     func setSpan(with coordinate: CLLocationCoordinate2D){

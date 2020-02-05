@@ -36,6 +36,7 @@ class SearchLocationViewController: UIViewController {
         tableView.dataSource = self
         searchCompleter.delegate = self
         self.searchCompleter.region = self.mapView.region
+        setRegion()
     }
     
     func setRegion(){

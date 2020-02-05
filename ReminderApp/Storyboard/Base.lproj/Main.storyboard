@@ -23,9 +23,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="B1v-qP-bzz" kind="show" identifier="cellSegue" id="HZh-gB-9PJ"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -280,7 +277,4 @@
     <resources>
         <image name="square" catalog="system" width="64" height="56"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="HZh-gB-9PJ"/>
-    </inferredMetricsTieBreakers>
 </document>
