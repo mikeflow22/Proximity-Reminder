@@ -15,22 +15,8 @@ class DetailReminderViewController: UIViewController {
     //MARK: - INSTANCE PROPERTIES
     var entryButtonWasSelected: Bool = true
     var shouldShowExitButton: Bool = true
-    let reminderController = ReminderController.shared
     var mylocationManager = CLLocationManager()
-    var addressString: String? {
-        didSet {
-            print("addressString was hit")
-            print("this is what was passed in: \(String(describing: addressString))")
-            if let string = addressString {
-                getAddressFrom(searchResultsTitle: string)
-            }
-        }
-    }
-    var coordinate: CLLocationCoordinate2D? {
-        didSet {
-            print("coordinate was set: \(coordinate.debugDescription)")
-        }
-    }
+    var coordinate: CLLocationCoordinate2D? 
     
     //MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
