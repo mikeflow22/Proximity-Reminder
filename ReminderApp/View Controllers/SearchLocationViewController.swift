@@ -76,14 +76,10 @@ class SearchLocationViewController: UIViewController {
 }
 
 //MARK: - UISearchBarDelegate Methods
-extension SearchLocationViewController: UISearchBarDelegate {
-    
-}
+extension SearchLocationViewController: UISearchBarDelegate {}
 
 //MARK: - MKMapViewDelegate Methods
-extension SearchLocationViewController: MKMapViewDelegate {
-    
-}
+extension SearchLocationViewController: MKMapViewDelegate {}
 
 //MARK: - MKLocalSearchCompleterDelegate Methods
 extension SearchLocationViewController: MKLocalSearchCompleterDelegate {
@@ -96,7 +92,6 @@ extension SearchLocationViewController: MKLocalSearchCompleterDelegate {
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
             print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
-         
     }
 }
 
@@ -138,22 +133,4 @@ extension SearchLocationViewController: UITableViewDataSource, UITableViewDelega
             }
         }
     }
-}
-
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {
-            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-            return
-        }
-        
-        self.currentLocation = location
-        print("current location: \(String(describing: self.currentLocation))")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
-         
-    }
-    
 }
