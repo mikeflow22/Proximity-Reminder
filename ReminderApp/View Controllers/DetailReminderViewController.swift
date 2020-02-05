@@ -160,7 +160,7 @@ class DetailReminderViewController: UIViewController {
         //now that we have a reminder object we can use that to create a local notification with a location trigger
         createLocalNotification(forReminder: reminder, withAddress: address)
 
-        //visual indication that we made it this far
+        //visual indication that we made it this far 
         self.view.backgroundColor = .blue
     }
     

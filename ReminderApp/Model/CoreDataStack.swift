@@ -32,5 +32,14 @@ class CoreDataStack {
     var mainContext: NSManagedObjectContext {
         return container.viewContext
     }
+    func save(){
+        if mainContext.hasChanges {
+            do {
+                try mainContext.save()
+            } catch  {
+                print("Error in: \(#function)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)")
+            }
+        }
+    }
 }
 
