@@ -81,36 +81,3 @@ class DetailReminderViewController: UIViewController {
     
 }
 
-
-extension DetailReminderViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print("Entered region:  \(region.identifier)")
-        manager.requestLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print("Exited region:  \(region.identifier)")
-        manager.requestLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {
-            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-            return }
-        print("this is the location: \(location.description)")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
-    }
-}
-
-extension DetailReminderViewController: MKMapViewDelegate {
-    
-}
-
-extension DetailReminderViewController: UNUserNotificationCenterDelegate, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("error: \(error)")
-    }
-}
