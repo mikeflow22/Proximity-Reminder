@@ -9,6 +9,7 @@
 import MapKit
 import CoreLocation
 
+//because we will use the locationManager in two or more files we should make a wrapper for it
 struct LocationManager {
     static func searchLocation(with searchCompletion: MKLocalSearchCompletion, completion: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
         let request = MKLocalSearch.Request(completion: searchCompletion)

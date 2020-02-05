@@ -13,7 +13,6 @@ import CoreLocation
 class SearchLocationViewController: UIViewController {
     
     //MARK: - Instance Properties
-    let locationManager = CLLocationManager()
     let searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
     var currentLocation: CLLocation? {
@@ -37,19 +36,8 @@ class SearchLocationViewController: UIViewController {
         tableView.dataSource = self
         searchCompleter.delegate = self
         self.searchCompleter.region = self.mapView.region
-        requestLocationPermission()
     }
     
-    func requestLocationPermission(){
-        if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse  {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestLocation()
-            locationManager.startUpdatingLocation()
-        } else {
-            locationManager.requestAlwaysAuthorization()
-        }
-    }
     
     func setRegion(){
         guard let userLocation = currentLocation else {
