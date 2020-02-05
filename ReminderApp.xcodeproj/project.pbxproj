@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1BD0B2DB23EB638F0059BDAB /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD0B2DA23EB638F0059BDAB /* NotificationManager.swift */; };
+		1BD0B2DD23EB707A0059BDAB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD0B2DC23EB707A0059BDAB /* LocationManager.swift */; };
 		1BF90C3223E332CF00FE76BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C3123E332CF00FE76BA /* AppDelegate.swift */; };
 		1BF90C3423E332CF00FE76BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF90C3323E332CF00FE76BA /* SceneDelegate.swift */; };
 		1BF90C3923E332CF00FE76BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BF90C3723E332CF00FE76BA /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		1BD0B2DA23EB638F0059BDAB /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		1BD0B2DC23EB707A0059BDAB /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1BF90C2E23E332CF00FE76BA /* ReminderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReminderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BF90C3123E332CF00FE76BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BF90C3323E332CF00FE76BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			children = (
 				1BF90C5823E344FE00FE76BA /* ReminderController.swift */,
 				1BD0B2DA23EB638F0059BDAB /* NotificationManager.swift */,
+				1BD0B2DC23EB707A0059BDAB /* LocationManager.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				1BF90C5523E3435000FE76BA /* CoreDataStack.swift in Sources */,
 				1BF90C4A23E33F2300FE76BA /* DetailReminderViewController.swift in Sources */,
 				1BD0B2DB23EB638F0059BDAB /* NotificationManager.swift in Sources */,
+				1BD0B2DD23EB707A0059BDAB /* LocationManager.swift in Sources */,
 				1BF90C4623E33EFC00FE76BA /* ReminderListTableViewController.swift in Sources */,
 				1BF90C5723E3438000FE76BA /* Reminder+Convenience.swift in Sources */,
 				1BF90C4823E33F1200FE76BA /* SearchLocationViewController.swift in Sources */,
