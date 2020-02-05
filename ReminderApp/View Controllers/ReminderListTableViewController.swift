@@ -8,33 +8,52 @@
 
 import UIKit
 import CoreData
+import UserNotifications
+import CoreLocation
 
 class ReminderListTableViewController: UITableViewController {
 
     //MARK: - Singleton
-    let reminderController = ReminderController.shared
+    let fetchedResultsController = Reminder.fetchedResultsController()
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //we need this in  order to get the reminders from the persistent store to populate the tableView
-        reminderController.fetchedResultsController.delegate = self
+       fetchedResultsController.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch  {
+            print("Error in: \(#function)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)")
+        }
+        
+        //check authorization status
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined, .denied: locationManager.requestWhenInUseAuthorization()
+        case .authorizedAlways, .authorizedWhenInUse: locationManager.startUpdatingLocation()
+        case .restricted: break
+        @unknown default: break
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return reminderController.fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController.sections?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return reminderController.fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reminderCell", for: indexPath)
 
-        let reminder = reminderController.fetchedResultsController.object(at: indexPath)
+        let reminder = fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = reminder.note
 
         return cell
@@ -42,7 +61,7 @@ class ReminderListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let reminder = reminderController.fetchedResultsController.object(at: indexPath)
+            let reminder = fetchedResultsController.object(at: indexPath)
             reminder.managedObjectContext?.delete(reminder)
         }
     }
