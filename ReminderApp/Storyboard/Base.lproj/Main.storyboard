@@ -114,7 +114,7 @@
         <!--Detail Reminder View Controller-->
         <scene sceneID="D01-eu-KWZ">
             <objects>
-                <viewController id="B1v-qP-bzz" customClass="DetailReminderViewController" customModule="ReminderApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="B1v-qP-bzz" customClass="DetailReminderViewController" customModule="ReminderApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pWq-jA-5bJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

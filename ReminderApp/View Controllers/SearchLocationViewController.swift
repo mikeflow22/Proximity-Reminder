@@ -38,7 +38,6 @@ class SearchLocationViewController: UIViewController {
         self.searchCompleter.region = self.mapView.region
     }
     
-    
     func setRegion(){
         guard let userLocation = currentLocation else {
             print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
@@ -54,25 +53,9 @@ class SearchLocationViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
     
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "detailSegue"{
-            guard let destinationVC = segue.destination as? DetailReminderViewController, let indexPath = tableView.indexPathForSelectedRow else {
-                print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-                return
-            }
-            
-            let addressString = searchResults[indexPath.row].title
-            print("This should be passing to the next controller: \(addressString)")
-            destinationVC.addressString = addressString
-        }
-     }
-
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchCompleter.queryFragment = searchBar.text ?? ""
-//        print("query fragments: \(searchCompleter.queryFragment)")
+        //        print("query fragments: \(searchCompleter.queryFragment)")
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -83,42 +66,11 @@ class SearchLocationViewController: UIViewController {
         if annotations == nil {
             self.annotations?.removeAll()
             self.mapView.removeAnnotations(annotations ?? [])
-          
+            
             print("annotations count 1 : \(self.annotations?.count)")
         } else {
             print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
         }
-    }
-    
-    func getAddressFrom(searchResultsTitle: String){
-            let request = MKLocalSearch.Request()
-            request.naturalLanguageQuery = searchResultsTitle
-            let localSearch = MKLocalSearch(request: request)
-            
-            localSearch.start { [unowned self] (response, error) in
-                if let error = error {
-                    print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
-                    return
-                }
-                if response == nil {
-                    print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-                    return
-                }
-                
-                //get the lat and long associated with the string/word/name we just go back from this call
-                guard let lat = response?.boundingRegion.center.latitude, let long = response?.boundingRegion.center.longitude else {
-                    print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-                    return
-                }
-                
-                //create annotation to add to map
-                let annotation = MKPointAnnotation()
-                annotation.title = searchResultsTitle
-                annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                self.annotations?.append(annotation)
-                //add it to mapview
-                self.mapView.addAnnotation(annotation)
-            }
     }
    
 }
@@ -157,32 +109,37 @@ extension SearchLocationViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath)
         let searchResult = searchResults[indexPath.row]
-        //now that we have a string we can get address from it
-        getAddressFrom(searchResultsTitle: searchResult.title)
         cell.textLabel?.text = searchResult.title
         
         return cell
     }
-}
-
-//MARK: - CLLocationManagerDelegate Methods
-extension SearchLocationViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.requestLocation() //this triggers a delegate callback
-        case .restricted:
-            print("restricted")
-            locationManager.stopUpdatingLocation()
-        case .notDetermined:
-            print("not determined")
-            locationManager.stopUpdatingLocation()
-        case .denied:
-            locationManager.stopUpdatingLocation()
-        @unknown default:
-            fatalError()
+    
+    //instead of using a segue we will use the didSelectRow delegate method to pass information to the detailVC
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        //segue using the storyboard ID
+        guard let detailVC = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as?  DetailReminderViewController else {
+            print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+            return }
+        
+        //use the wrapper for the locationManager
+        LocationManager.searchLocation(with: searchResults[indexPath.row]) { [weak self] (result) in
+            guard let self = self else {
+                print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+                return }
+            guard let coordinate = try? result.get() else {
+                print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
+                return }
+            detailVC.coordinate = coordinate
+            
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(detailVC, animated: true)
+            }
         }
     }
+}
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {
