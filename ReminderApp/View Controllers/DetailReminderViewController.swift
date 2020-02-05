@@ -73,40 +73,6 @@ class DetailReminderViewController: UIViewController {
     
     //MARK: - Instance Methods
     
-    func getAddressFrom(searchResultsTitle: String){
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = searchResultsTitle
-        let localSearch = MKLocalSearch(request: request)
-        
-        localSearch.start { [unowned self] (response, error) in
-            if let error = error {
-                print("Error in file: \(#file) in the body of the function: \(#function)\n on line: \(#line)\n Readable Error: \(error.localizedDescription)\n Technical Error: \(error)\n")
-                return
-            }
-            if response == nil {
-                print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-                return
-            }
-            
-            //get the lat and long associated with the string/word/name we just go back from this call
-            guard let lat = response?.boundingRegion.center.latitude, let long = response?.boundingRegion.center.longitude else {
-                print("Error in file: \(#file), in the body of the function: \(#function) on line: \(#line)\n")
-                return
-            }
-            
-            //create annotation to add to map
-            let annotation = MKPointAnnotation()
-            annotation.title = searchResultsTitle
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            self.coordinate = coordinate
-            annotation.coordinate = coordinate
-            
-            //add it to mapview
-            self.mapView.addAnnotation(annotation)
-            self.setSpan(with: coordinate)
-        }
-    }
-    
     func setSpan(with coordinate: CLLocationCoordinate2D){
         let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let region = MKCoordinateRegion(center: coordinate, span: span)
