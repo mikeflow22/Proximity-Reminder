@@ -16,7 +16,8 @@ class DetailReminderViewController: UIViewController {
     var entryButtonWasSelected: Bool = true
     var shouldShowExitButton: Bool = true
     var mylocationManager = CLLocationManager()
-    var coordinate: CLLocationCoordinate2D? 
+    var coordinate: CLLocationCoordinate2D?
+    var wantsNotifictionWhenEntering = false
     
     //MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -29,8 +30,13 @@ class DetailReminderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        mylocationManager.delegate = self
-        mylocationManager.requestAlwaysAuthorization()
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(resign)))
+    }
+    
+    @objc func resign(){
+        reminderTextField.resignFirstResponder()
+        radiusTextField.resignFirstResponder()
     }
     
     //Start simulator on detailReminderViewController and just hit the set reminder button at the button. This is like mock data to see if the local notification works
